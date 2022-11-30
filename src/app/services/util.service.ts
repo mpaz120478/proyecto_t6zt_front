@@ -9,7 +9,7 @@ import { Empleado } from '../models/empleado.model';
 import { Roles } from '../models/roles.model';
 import { Usuario } from '../models/usuario.model';
 
-const baseUrlUtil = AppSettings.API_ENDPOINT+ '/util'
+const baseUrlUtil = AppSettings.API_ENDPOINT+ '/util';
 
 @Injectable({
   providedIn: 'root'

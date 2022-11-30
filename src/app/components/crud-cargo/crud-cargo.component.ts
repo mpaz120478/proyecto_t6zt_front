@@ -15,8 +15,8 @@ export class CrudCargoComponent implements OnInit {
 
   cargos: Cargo [] = []
   cargo: Cargo = {
-    IdCargo:0,
-    NombreCargo:"",
+    idCargo:0,
+    nombreCargo:"",
   }
 
   submitted = false;
@@ -31,7 +31,7 @@ export class CrudCargoComponent implements OnInit {
 
   constructor(private cargoService: CargoService, private utilService: UtilService) {
     this.utilService.listarCargos().subscribe(
-      response => this.cargos = response
+    response => this.cargos = response
     );
    }
 
@@ -52,8 +52,8 @@ export class CrudCargoComponent implements OnInit {
         Swal.fire('Mensaje', x.mensaje,'info');
       });
       this.cargo = {
-        IdCargo:0,
-        NombreCargo:"",
+        idCargo:0,
+        nombreCargo:"",
       }
   }
 
@@ -67,8 +67,8 @@ export class CrudCargoComponent implements OnInit {
         Swal.fire('Mensaje', x.mensaje,'info');
       });
       this.cargo = {
-        IdCargo:0,
-        NombreCargo:"",
+        idCargo:0,
+        nombreCargo:"",
       }
   }
 
@@ -83,7 +83,7 @@ export class CrudCargoComponent implements OnInit {
       cancelButtonText: 'No, cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.cargoService.eliminarCargo(obj.IdCargo || 0).subscribe(
+        this.cargoService.eliminarCargo(obj.idCargo || 0).subscribe(
           x  =>  {
             Swal.fire('Mensaje',x.mensaje,'success');
 

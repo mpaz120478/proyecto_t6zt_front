@@ -3,7 +3,7 @@
   <div class="col-md-23" style="margin-top: 3%">
     <div class="row" style="height: 80px">
       <div class="col-md-2">
-        <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
+        <button type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
       </div>
     </div>
     <div class="row">
@@ -19,8 +19,8 @@
             </thead>
             <tbody>
               <tr *ngFor="let x of cargos">
-                <td class= "align-middle">{{ x.IdCargo }}</td>
-                <td class= "align-middle">{{ x.NombreCargo }}</td>
+                <td class= "align-middle">{{ x.idCargo }}</td>
+                <td class= "align-middle">{{ x.nombreCargo }}</td>
                 <td class= "align-middle">
                   <button type="button" (click)="busca(x)" class="btn btn-success m-1" data-toggle="modal" data-target="#idModalActualizar">Editar</button>
                   <button (click)="eliminaCargo(x)" type="button" class="btn btn-danger">Eliminar</button>
@@ -43,7 +43,7 @@
             <div class="submit-form">
               <div  class="row">
                 <div class="col-lg-3"><label for="id_reg_nombre">Nombre del Cargo</label>
-                  <input formControlName="validaNombre" type="text" [ngModel]="cargo.NombreCargo" placeholder="Ingrese el cargo" class="form-control" name="nombres" id="id_reg_nombres"/>
+                  <input formControlName="validaNombre" type="text" [(ngModel)]="cargo.nombreCargo" placeholder="Ingrese el cargo" class="form-control" name="nombre" id="id_reg_nombre"/>
                   <div class="invalid" *ngIf="submitted && formsRegistra.controls.validaNombre.errors">
                     <ul>
                       <li>Los nombres es obligatorio</li>
@@ -77,7 +77,7 @@
             <div class="submit-form">
               <div  class="row">
                 <div class="col-lg-3"><label for="id_reg_nombre">Nombre del Cargo</label>
-                  <input formControlName="validaNombre" type="text" [ngModel]="cargo.NombreCargo" placeholder="Ingrese los nombres" class="form-control" name="nombres" id="id_act_nombres"/>
+                  <input formControlName="validaNombre" type="text" [(ngModel)]="cargo.nombreCargo" placeholder="Ingrese los nombres" class="form-control" name="nombre" id="id_act_nombre"/>
                   <div class="invalid" *ngIf="submitted && formsActualiza.controls.validaNombre.errors">
                     <ul>
                       <li>Los nombres es obligatorio</li>

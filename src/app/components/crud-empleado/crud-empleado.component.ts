@@ -29,7 +29,7 @@ export class CrudEmpleadoComponent implements OnInit {
     SueldoEmpleado:"",
     Estado:1,
     cargo: {
-      IdCargo:-1,
+      idCargo:-1,
     },
     rol: {
       IdRol:-1,
@@ -116,7 +116,7 @@ export class CrudEmpleadoComponent implements OnInit {
       SueldoEmpleado:"",
       Estado:1,
       cargo: {
-        IdCargo:-1,
+        idCargo:-1,
       },
       rol: {
       IdRol:-1,
@@ -149,7 +149,7 @@ export class CrudEmpleadoComponent implements OnInit {
       SueldoEmpleado:"",
       Estado:1,
       cargo: {
-        IdCargo:-1,
+        idCargo:-1,
       },
       rol: {
       IdRol:-1,

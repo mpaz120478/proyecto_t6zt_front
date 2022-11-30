@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AppSettings } from '../app.settings';
 import { Cargo } from '../models/cargo.model';
 
-const baseUrl = AppSettings.API_ENDPOINT+ '/cargos'
+const baseUrl = AppSettings.API_ENDPOINT+ '/cargos';
 
 @Injectable({
   providedIn: 'root'

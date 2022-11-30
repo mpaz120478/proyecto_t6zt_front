@@ -1,4 +1,4 @@
 export class Cargo {
-  IdCargo?: number;
-  NombreCargo?: string;
+  idCargo?: number;
+  nombreCargo?: string;
 }

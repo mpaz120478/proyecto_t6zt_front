@@ -1,14 +1,28 @@
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { CrudCargoComponent } from './components/crud-cargo/crud-cargo.component';
+import { CrudClienteComponent } from './components/crud-cliente/crud-cliente.component';
+import { CrudEmpleadoComponent } from './components/crud-empleado/crud-empleado.component';
+import { CrudUsuarioComponent } from './components/crud-usuario/crud-usuario.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CrudCargoComponent,
+    CrudClienteComponent,
+    CrudEmpleadoComponent,
+    CrudUsuarioComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

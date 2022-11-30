@@ -13,6 +13,10 @@ export class UsuarioService {
 
   constructor(private http:HttpClient) { }
 
+  consultaPorApellidos(filtro:string):Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(baseUrl +"/listaUsuarioPorApellidoLike/"+filtro);
+  }
+
   registrarUsuario(obj:Usuario):Observable<any> {
     return this.http.post(baseUrl + "/registraUsuario", obj);
   }

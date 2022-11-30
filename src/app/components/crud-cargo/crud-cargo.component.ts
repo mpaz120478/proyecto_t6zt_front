@@ -22,11 +22,11 @@ export class CrudCargoComponent implements OnInit {
   submitted = false;
 
   formsRegistra = new FormGroup({
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,30}')]),
   });
 
   formsActualiza = new FormGroup({
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,30}')]),
   });
 
   constructor(private cargoService: CargoService, private utilService: UtilService) {

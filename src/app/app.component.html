@@ -1,27 +1,34 @@
-<router-outlet></router-outlet>
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Sabor de Casa</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Personal</a>
-          <ul class="dropdown-menu">
-            <li class="nav-link"><a class="nav-link" href="#">Cargos</a></li>
-            <li><a class="nav-link" href="#">Empleados</a></li>
-            <li><a class="nav-link" href="#">Usuarios</a></li>
-            <li><a class="nav-link" href="#">Clientes</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">Productos</a>
-        </li>
-      </ul>
+<div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Sabor de Casa</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Personal</a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" routerLink="crudCargo">Cargos</a></li>
+              <li><a class="dropdown-item" href=".components/crud-cargo/crud-cargo.component.html">Empleados</a></li>
+              <li><a class="dropdown-item" href="#">Usuarios</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="#">Cargos</a></li>
+              <li><a class="dropdown-item" href="#">Empleados</a></li>
+              <li><a class="dropdown-item" href="#">Usuarios</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
+  <div class="container mt-3" style="max-width: 100%;">
+    <router-outlet></router-outlet>
   </div>
-</nav>
-
+</div>
 

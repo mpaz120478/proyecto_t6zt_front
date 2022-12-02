@@ -9,6 +9,7 @@ const baseUrl = AppSettings.API_ENDPOINT+ '/cargos';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CargoService {
 
   constructor(private http:HttpClient) { }
@@ -18,10 +19,10 @@ export class CargoService {
   }
 
   actualizarCargo(obj:Cargo):Observable<any> {
-    return this.http.put(baseUrl + "/actualizaCargo", obj)
+    return this.http.put(baseUrl + "/actualizaCargo", obj);
   }
 
-  eliminarCargo(IdCargo:number):Observable<any> {
-    return this.http.delete(baseUrl + "/eliminaCargo"+ IdCargo);
+  eliminarCargo(idCargo:number):Observable<any> {
+    return this.http.delete(baseUrl + "/eliminaCargo/"+ idCargo);
   }
 }

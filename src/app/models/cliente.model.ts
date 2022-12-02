@@ -1,13 +1,13 @@
 import { Departamento } from "./departamento.model";
 
 export class Cliente {
-  IdCliente?: number;
-  DocCliente?: number;
-  DatosCliente?: string;
-  DirecCliente?: string;
-  FonoCliente?: string;
-  EmailCliente?: string;
-  Estado?: number;
-  FechaRegistro?: Date;
-  dpto?: Departamento;
+  idCliente?: number;
+  docCliente?:string;
+  datosCliente?: string;
+  fonoCliente?: string;
+  emailCliente?: string;
+  direcCliente?: string;
+  departamento?: Departamento;
+  fechaRegistro?: Date;
+  estado?: number;
 }

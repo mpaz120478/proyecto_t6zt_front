@@ -1,1 +1,210 @@
-<p>crud-cliente works!</p>
+
+<div class="container"><h5>Crud Clientes</h5>
+  <div class="col-md-23" style="margin-top: 3%">
+    <div class="row" style="height: 80px">
+      <div class="col-md-4">
+        <input [(ngModel)]="filtro" class="form-control" id="id_txt_filtro" name="filtro" placeholder="Ingrese los datos" type="text" maxlength="30"/>
+      </div>
+      <div class="col-md-2">
+        <button type="button" (click)="consultarDatos()" class="btn btn-warning btn-sm" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
+      </div>
+      <div class="col-md-2">
+        <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <table id="id_table" class="table table-striped table-bordered">
+            <thead>
+              <tr class="text-center">
+                <th class= "align-middle" style="width: 5%">#</th>
+                <th class= "align-middle" style="width: 10%">DNI - RUC</th>
+                <th class= "align-middle" style="width: 30%">Datos</th>
+                <th class= "align-middle" style="width: 10%">Teléfono</th>
+                <th class= "align-middle" style="width: 10%">Departamento</th>
+                <th class= "align-middle" style="width: 10%">Estado</th>
+                <th class= "align-middle" style="width: 15%">Acciones</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of clientes">
+                <td class= "align-middle">{{ x.idCliente }}</td>
+                <td class= "align-middle">{{ x.docCliente }}</td>
+                <td class= "align-middle">{{ x.datosCliente }}</td>
+                <td class= "align-middle">{{ x.fonoCliente }}</td>
+                <td class= "align-middle">{{ x.departamento!.nombreDpto}}</td>
+                <td class= "align-middle">{{ x.estado ==1 ?"Activo":"Inactivo" }}</td>
+                <td class= "align-middle">
+                  <button type="button" (click)="busca(x)" class="btn btn-success m-1" data-toggle="modal" data-target="#idModalActualizar">Editar</button>
+                  <button (click)="eliminaCliente(x)" type="button" class="btn btn-danger">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="idModalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 70%;">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Registro de Clientes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form class="content" [formGroup]="formsRegistraCliente">
+            <div class="submit-form">
+              <div  class="row">
+                <div class="col-lg-3"><label for="id_reg_doc">DNI - RUC</label>
+                  <input formControlName="validaDocumento" type="text" [(ngModel)]="cliente.docCliente" placeholder="Ingrese DNI o RUC" class="form-control" name="doc" id="id_reg_doc" maxlength="11"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaDocumento.errors">
+                    <ul>
+                      <li>DNI-RUC es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_datos">Datos</label>
+                  <input formControlName="validaDatos" type="text" [(ngModel)]="cliente.datosCliente" placeholder="Ingrese los datos" class="form-control" name="datos" id="id_reg_datos"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaDatos.errors">
+                    <ul>
+                      <li>Los datos son obligatorios</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_fono">Teléfono</label>
+                  <input formControlName="validaTelefono" [(ngModel)]="cliente.fonoCliente" type="text" placeholder="Ingrese teléfono" class="form-control" name="fono" id="id_reg_fono" maxlength="9"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaTelefono.errors">
+                    <ul>
+                      <li>El teléfono es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_correo">Correo Electrónico</label>
+                  <input formControlName="validaCorreo" [(ngModel)]="cliente.emailCliente" type="email" placeholder="Ingrese correo electrónico" class="form-control" name="correo" id="id_reg_correo"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaCorreo.errors">
+                    <ul>
+                      <li>El correo es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 5%">
+                <div class="col-lg-3"><label for="id_reg_direc">Dirección</label>
+                  <input formControlName="validaDireccion" [(ngModel)]="cliente.direcCliente" type="text" placeholder="Ingrese dirección" class="form-control" name="direc" id="id_reg_direc"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaDireccion.errors">
+                    <ul><li>La dirección es obligatoria</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-4"><label for="id_reg_departamento">Departamento</label>
+                  <select formControlName="validaDpto" [(ngModel)]="cliente.departamento!.idDpto" id="id_reg_departamento" name="departamento" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option *ngFor="let aux of departamentos" value="{{aux.idDpto}}">{{aux.nombreDpto}}</option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaDpto.errors">
+                    <ul><li>El Departamento es obligatorio</li></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary btn-sm" style="width: 100px;">Limpiar</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Cerrar</button>
+              <div class="form-group text-center">
+                <div class="col-lg-12">
+                  <button (click)="registraCliente()" id="id_reg_registra" class="btn btn-success btn-sm "style="width: 100px;" [disabled]="submitted && formsRegistraCliente.invalid">Registrar</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="idModalActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 80%;">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Actualización de Clientes</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form class="content" [formGroup]="formsActualizaCliente">
+            <div class="submit-form">
+              <div  class="row">
+                <div class="col-lg-3"><label for="id_reg_doc">DNI - RUC</label>
+                  <input formControlName="validaDocumento" type="text" [(ngModel)]="cliente.docCliente" placeholder="Ingrese DNI o RUC" class="form-control" name="doc" id="id_act_doc" maxlength="11"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaDocumento.errors">
+                    <ul>
+                      <li>DNI-RUC es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_datos">Datos</label>
+                  <input formControlName="validaDatos" type="text" [(ngModel)]="cliente.datosCliente" placeholder="Ingrese los datos" class="form-control" name="datos" id="id_act_datos"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaDatos.errors">
+                    <ul>
+                      <li>Los datos son obligatorios</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_fono">Teléfono</label>
+                  <input formControlName="validaTelefono" [(ngModel)]="cliente.fonoCliente" type="text" placeholder="Ingrese teléfono" class="form-control" name="fono" id="id_act_fono" maxlength="9"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaTelefono.errors">
+                    <ul>
+                      <li>El teléfono es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_correo">Correo Electrónico</label>
+                  <input formControlName="validaCorreo" [(ngModel)]="cliente.emailCliente" type="email" placeholder="Ingrese correo electrónico" class="form-control" name="correo" id="id_act_correo"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaCorreo.errors">
+                    <ul>
+                      <li>El correo es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 5%">
+                <div class="col-lg-3"><label for="id_reg_direc">Dirección</label>
+                  <input formControlName="validaDireccion" [(ngModel)]="cliente.direcCliente" type="text" placeholder="Ingrese dirección" class="form-control" name="direc" id="id_act_direc"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaDireccion.errors">
+                    <ul><li>La dirección es obligatoria</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-4"><label for="id_reg_departamento">Departamento</label>
+                  <select formControlName="validaDpto" [(ngModel)]="cliente.departamento!.idDpto" id="id_reg_departamento" name="departamento" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option *ngFor="let aux of departamentos" value="{{aux.idDpto}}">{{aux.nombreDpto}}</option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaDpto.errors">
+                    <ul><li>El Departamento es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_act_estado">Estado</label>
+                  <select formControlName="validaEstado" id="id_act_estado" [(ngModel)]="cliente.estado"  name="estado" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option value="1"> Activo </option>
+                    <option value="0"> Inactivo </option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaEstado.errors">
+                    <ul><li>El Estado es obligatorio</li></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary btn-sm" style="width: 100px;">Limpiar</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="btn_act_cerrar" style="width: 100px;">Cerrar</button>
+              <div class="form-group text-center">
+                <div class="col-lg-12">
+                  <button id="id_act_actualiza" (click)="actualizaCliente()" class="btn btn-success btn-sm" style="width: 100px">Actualizar</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

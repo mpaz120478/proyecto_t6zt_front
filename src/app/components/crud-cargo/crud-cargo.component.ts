@@ -22,11 +22,11 @@ export class CrudCargoComponent implements OnInit {
   submitted = false;
 
   formsRegistra = new FormGroup({
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
   });
 
   formsActualiza = new FormGroup({
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
   });
 
   constructor(private cargoService: CargoService, private utilService: UtilService) {
@@ -50,7 +50,11 @@ export class CrudCargoComponent implements OnInit {
       x=>{
         document.getElementById("btn_reg_cerrar")?.click();
         Swal.fire('Mensaje', x.mensaje,'info');
-      });
+        this.utilService.listarCargos().subscribe(
+          x => this.cargos = x
+        );
+      }
+    );
       this.cargo = {
         idCargo:0,
         nombreCargo:"",
@@ -65,7 +69,11 @@ export class CrudCargoComponent implements OnInit {
       x=>{
         document.getElementById("btn_act_cerrar")?.click();
         Swal.fire('Mensaje', x.mensaje,'info');
-      });
+        this.utilService.listarCargos().subscribe(
+          x => this.cargos = x
+        );
+      }
+    );
       this.cargo = {
         idCargo:0,
         nombreCargo:"",
@@ -86,7 +94,9 @@ export class CrudCargoComponent implements OnInit {
         this.cargoService.eliminarCargo(obj.idCargo || 0).subscribe(
           x  =>  {
             Swal.fire('Mensaje',x.mensaje,'success');
-
+            this.utilService.listarCargos().subscribe(
+              x => this.cargos = x
+            );
             }
         );
       }

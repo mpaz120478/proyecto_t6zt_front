@@ -20,7 +20,7 @@ export class UtilService {
   constructor(private http:HttpClient) { }
 
   listarDptos():Observable<Departamento[]>{
-    return this.http.get<Departamento[]>(baseUrlUtil+"/listarDptos");
+    return this.http.get<Departamento[]>(baseUrlUtil+"/listarDepartamentos");
   }
 
   listarCargos():Observable<Cargo[]>{

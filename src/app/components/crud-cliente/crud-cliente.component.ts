@@ -11,39 +11,41 @@ import Swal from 'sweetalert2';
   templateUrl: './crud-cliente.component.html',
   styleUrls: ['./crud-cliente.component.css']
 })
+
 export class CrudClienteComponent implements OnInit {
 
   clientes: Cliente [] = []
-  dptos: Departamento [] = []
-  filtro: string =""
+  departamentos: Departamento [] = [];
+  filtro: string ="";
 
   cliente: Cliente = {
-    IdCliente:0,
-    DocCliente:0,
-    DatosCliente:"",
-    DirecCliente:"",
-    FonoCliente:"",
-    EmailCliente:"",
-    Estado:1,
-    dpto:{
-      IdDpto:-1,
+    idCliente:0,
+    docCliente:"",
+    datosCliente:"",
+    fonoCliente:"",
+    emailCliente:"",
+    direcCliente:"",
+    fechaRegistro: new Date(),
+    estado:1,
+    departamento:{
+      idDpto:-1,
     }
   }
 
   submitted = false;
 
-  formsRegistra = new FormGroup({
-    validaDocumento: new FormControl('', [Validators.required,Validators.pattern('[0-9]{11}')]),
-    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
+  formsRegistraCliente = new FormGroup({
+    validaDocumento: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8,11}')]),
+    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,50}')]),
     validaDireccion: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,100}')]),
     validaTelefono: new FormControl('', [Validators.required,Validators.pattern('[0-9]{9}')]),
     validaCorreo: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')]),
     validaDpto: new FormControl('', [Validators.min(1)]),
   });
 
-  formsActualiza = new FormGroup({
-    validaDocumento: new FormControl('', [Validators.required,Validators.pattern('[0-9]{11}')]),
-    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
+  formsActualizaCliente = new FormGroup({
+    validaDocumento: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8,11}')]),
+    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,50}')]),
     validaDireccion: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,100}')]),
     validaTelefono: new FormControl('', [Validators.required,Validators.pattern('[0-9]{9}')]),
     validaCorreo: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')]),
@@ -53,19 +55,19 @@ export class CrudClienteComponent implements OnInit {
 
   constructor(private clienteService: ClienteService, private utilService: UtilService) {
     this.utilService.listarDptos().subscribe(
-      response => this.dptos = response
+      response => this.departamentos = response
     );
   }
 
   actualizaEstado(obj:Cliente){
-    obj.Estado = obj.Estado == 1? 0 : 1;
+    obj.estado = obj.estado == 1? 0 : 1;
     this.clienteService.actualizarCliente(obj).subscribe();
   }
 
   busca(obj:Cliente){
     this.cliente = obj;
     this.utilService.listarDptos().subscribe(
-      response =>  this.dptos = response
+      response =>  this.departamentos = response
     );
   }
 
@@ -77,7 +79,7 @@ export class CrudClienteComponent implements OnInit {
 
   registraCliente(){
     this.submitted = true;
-    if(this.formsRegistra.invalid){return;}
+    if(this.formsRegistraCliente.invalid){return;}
     this.submitted = false;
     this.clienteService.registrarCliente(this.cliente).subscribe(
       x=>{
@@ -88,26 +90,27 @@ export class CrudClienteComponent implements OnInit {
         );
       }
     );
-    this.dptos = [];
+    this.departamentos = [];
     this.cliente = {
-      IdCliente:0,
-      DocCliente:0,
-      DatosCliente:"",
-      DirecCliente:"",
-      FonoCliente:"",
-      EmailCliente:"",
-      Estado:1,
-      dpto:{
-        IdDpto:-1,
+      idCliente:0,
+      docCliente:"",
+      datosCliente:"",
+      fonoCliente:"",
+      emailCliente:"",
+      direcCliente:"",
+      fechaRegistro: new Date(),
+      estado:1,
+      departamento:{
+        idDpto:-1,
       }
     }
   }
 
   actualizaCliente(){
     this.submitted = true;
-    if(this.formsRegistra.invalid){return;}
+    if(this.formsRegistraCliente.invalid){return;}
     this.submitted = false;
-    this.clienteService.registrarCliente(this.cliente).subscribe(
+    this.clienteService.actualizarCliente(this.cliente).subscribe(
       x=>{
         document.getElementById("btn_act_cerrar")?.click();
         Swal.fire('Mensaje', x.mensaje,'info');
@@ -116,17 +119,18 @@ export class CrudClienteComponent implements OnInit {
         );
       }
     );
-    this.dptos = [];
+    this.departamentos = [];
     this.cliente = {
-      IdCliente:0,
-      DocCliente:0,
-      DatosCliente:"",
-      DirecCliente:"",
-      FonoCliente:"",
-      EmailCliente:"",
-      Estado:1,
-      dpto:{
-        IdDpto:-1,
+      idCliente:0,
+      docCliente:"",
+      datosCliente:"",
+      fonoCliente:"",
+      emailCliente:"",
+      direcCliente:"",
+      fechaRegistro: new Date(),
+      estado:1,
+      departamento:{
+        idDpto:-1,
       }
     }
   }
@@ -142,7 +146,7 @@ export class CrudClienteComponent implements OnInit {
       cancelButtonText: 'No, cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.clienteService.eliminarCliente(obj.IdCliente || 0).subscribe(
+        this.clienteService.eliminarCliente(obj.idCliente || 0).subscribe(
           x  =>  {
             Swal.fire('Mensaje',x.mensaje,'success');
             this.clienteService.consultaPorDatos(this.filtro==""?"todos":this.filtro).subscribe(

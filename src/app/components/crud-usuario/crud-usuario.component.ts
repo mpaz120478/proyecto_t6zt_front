@@ -14,38 +14,34 @@ import Swal from 'sweetalert2';
 export class CrudUsuarioComponent implements OnInit {
 
   usuarios: Usuario [] = []
-  filtro: string=""
+  filtro: string="";
 
   usuario: Usuario = {
-    IdUsuario:0,
-    DniEmpleado:"",
-    ApeEmpleado:"",
-    NomEmpleado:"",
-    NomUsuario:"",
-    FechaRegistro: new Date,
-    ClaveUsuario:"",
-    Estado:1,
-    empleado: {
-      IdEmpleado:-1,
-    }
+    idUsuario:0,
+    dniEmpleado:"",
+    apeEmpleado:"",
+    nomEmpleado:"",
+    nomUsuario:"",
+    claveUsuario:"",
+    estado:1,
   }
 
   submitted = false;
 
-  formsRegistra = new FormGroup({
+  formsRegistraUsuario = new FormGroup({
     validaDni: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8}')]),
-    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
-    validaUsuario: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,20}')]),
-    validaClave: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,20}')]),
+    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaUsuario: new FormControl('',[Validators.required]),
+    validaClave: new FormControl('',[Validators.required]),
   });
 
-  formsActualiza = new FormGroup({
+  formsActualizaUsuario = new FormGroup({
     validaDni: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8}')]),
-    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
-    validaUsuario: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,20}')]),
-    validaClave: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,20}')]),
+    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaUsuario: new FormControl('',[Validators.required]),
+    validaClave: new FormControl('',[Validators.required]),
     validaEstado: new FormControl('', [Validators.min(0)]),
   });
 
@@ -58,7 +54,7 @@ export class CrudUsuarioComponent implements OnInit {
    }
 
    actualizaEstado(obj:Usuario){
-    obj.Estado = obj.Estado == 1? 0 : 1;
+    obj.estado = obj.estado == 1? 0 : 1;
     this.usuarioService.actualizarUsuario(obj).subscribe();
   }
 
@@ -77,7 +73,7 @@ export class CrudUsuarioComponent implements OnInit {
 
   registraUsuario(){
     this.submitted = true;
-    if(this.formsRegistra.invalid){return;}
+    if(this.formsRegistraUsuario.invalid){return;}
     this.submitted = false;
     this.usuarioService.registrarUsuario(this.usuario).subscribe(
       x=>{
@@ -89,25 +85,21 @@ export class CrudUsuarioComponent implements OnInit {
       }
     );
     this.usuario = {
-      IdUsuario:0,
-      DniEmpleado:"",
-      ApeEmpleado:"",
-      NomEmpleado:"",
-      NomUsuario:"",
-      FechaRegistro: new Date,
-      ClaveUsuario:"",
-      Estado:1,
-      empleado: {
-        IdEmpleado:-1,
-      }
+      idUsuario:0,
+      dniEmpleado:"",
+      apeEmpleado:"",
+      nomEmpleado:"",
+      nomUsuario:"",
+      claveUsuario:"",
+      estado:1,
     }
   }
 
   actualizaUsuario(){
     this.submitted = true;
-    if(this.formsRegistra.invalid){return;}
+    if(this.formsRegistraUsuario.invalid){return;}
     this.submitted = false;
-    this.usuarioService.registrarUsuario(this.usuario).subscribe(
+    this.usuarioService.actualizarUsuario(this.usuario).subscribe(
       x=>{
         document.getElementById("btn_act_cerrar")?.click();
         Swal.fire('Mensaje', x.mensaje,'info');
@@ -117,18 +109,37 @@ export class CrudUsuarioComponent implements OnInit {
       }
     );
     this.usuario = {
-      IdUsuario:0,
-      DniEmpleado:"",
-      ApeEmpleado:"",
-      NomEmpleado:"",
-      NomUsuario:"",
-      FechaRegistro: new Date,
-      ClaveUsuario:"",
-      Estado:1,
-      empleado: {
-        IdEmpleado:-1,
-      }
+      idUsuario:0,
+      dniEmpleado:"",
+      apeEmpleado:"",
+      nomEmpleado:"",
+      nomUsuario:"",
+      claveUsuario:"",
+      estado:1,
     }
+  }
+
+  eliminaUsuario(obj:Usuario){
+    Swal.fire({
+      title: '¿Desea eliminar?',
+      text: "Los cambios no se van a revertir",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, elimina.',
+      cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usuarioService.eliminarUsuario(obj.idUsuario || 0).subscribe(
+          x  =>  {
+            Swal.fire('Mensaje',x.mensaje,'success');
+            this.usuarioService.consultaPorApellidos(this.filtro==""?"todos":this.filtro).subscribe(
+              x => this.usuarios = x
+              );
+            }
+        );
+      }
+    })
   }
 
   ngOnInit(): void {

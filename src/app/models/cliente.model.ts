@@ -8,6 +8,5 @@ export class Cliente {
   emailCliente?: string;
   direcCliente?: string;
   departamento?: Departamento;
-  fechaRegistro?: Date;
   estado?: number;
 }

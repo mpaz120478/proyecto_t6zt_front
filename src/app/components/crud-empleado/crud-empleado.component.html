@@ -1,1 +1,266 @@
-<p>crud-empleado works!</p>
+
+<div class="container"><h5>Crud Empleado</h5>
+  <div class="col-md-23" style="margin-top: 3%">
+    <div class="row" style="height: 80px">
+      <div class="col-md-4">
+        <input [(ngModel)]="filtro" class="form-control" id="id_txt_filtro" name="filtro" placeholder="Buscar por apellido" type="text" maxlength="30"/>
+      </div>
+      <div class="col-md-2">
+        <button type="button" (click)="consultarApellido()" class="btn btn-warning btn-sm" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
+      </div>
+      <div class="col-md-2">
+        <button type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <table id="id_table" class="table table-striped table-bordered">
+            <thead>
+              <tr class="text-center">
+                <th class= "align-middle" style="width: 5%">#</th>
+                <th class= "align-middle" style="width: 10%">DNI</th>
+                <th class= "align-middle" style="width: 20%">Apellidos y Nombres</th>
+                <th class= "align-middle" style="width: 15%">Cargo</th>
+                <th class= "align-middle" style="width: 10%">Rol</th>
+                <th class= "align-middle" style="width: 10%">Fecha Contrato</th>
+                <th class= "align-middle" style="width: 10%">Estado</th>
+                <th class= "align-middle" style="width: 15%">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of empleados">
+                <td class= "text-center align-middle">{{ x.idEmpleado }}</td>
+                <td class= "text-center align-middle">{{ x.dniEmpleado }}</td>
+                <td class= "align-middle">{{ x.apeEmpleado }} {{ x.nomEmpleado }}</td>
+                <td class= "align-middle">{{ x.cargo!.nombreCargo }}</td>
+                <td class= "align-middle">{{ x.rol!.nombreRol }}</td>
+                <td class= "text-center align-middle">{{ x.fechaContrato }}</td>
+                <td class= "text-center align-middle">{{ x.estado ==1 ?"Activo":"Inactivo" }}</td>
+                <td class= "text-center align-middle">
+                  <button type="button" (click)="busca(x)" class="btn btn-success m-1" data-toggle="modal" data-target="#idModalActualizar">Editar</button>
+                  <button (click)="eliminaEmpleado(x)" type="button" class="btn btn-danger">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="idModalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 65%;">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Registro de Empleados</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form class="content" [formGroup]="formsRegistraEmpleado">
+            <div class="submit-form">
+              <div  class="row">
+                <div class="col-lg-3"><label for="id_reg_dniEmpleado">DNI</label>
+                  <input formControlName="validaDni" type="text" [(ngModel)]="empleado.dniEmpleado" placeholder="Ingrese el DNI" class="form-control" name="dniEmpleado" id="id_reg_dniEmpleado" maxlength="8"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaDni.errors">
+                    <ul>
+                      <li>El DNI es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_apeEmpleado">Apellidos</label>
+                  <input formControlName="validaApellido" type="text" [(ngModel)]="empleado.apeEmpleado" placeholder="Ingrese los Apellidos" class="form-control" name="apeEmpleado" id="id_reg_apeEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaApellido.errors">
+                    <ul>
+                      <li>Los Apellidos son obligatorios</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_nomEmpleado">Nombres</label>
+                  <input formControlName="validaNombre" type="text" [(ngModel)]="empleado.nomEmpleado" placeholder="Ingrese los Nombres" class="form-control" name="nombreEmpleado" id="id_reg_nomEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaNombre.errors">
+                    <ul>
+                      <li>Los Nombres son obligatorios</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_emailEmpleado">Correo Electrónico</label>
+                  <input formControlName="validaCorreo" type="email" [(ngModel)]="empleado.emailEmpleado" placeholder="Ingrese el Correo Electrónico" class="form-control" name="emailEmpleado" id="id_reg_emailEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaCorreo.errors">
+                    <ul>
+                      <li>El Correo Electrónico es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 4%">
+                <div class="col-lg-3"><label for="id_reg_telefono">Teléfono</label>
+                  <input formControlName="validaTelefono" [(ngModel)]="empleado.telefono" type="tel" placeholder="Ingrese el Teléfono" class="form-control" name="telefono" id="id_reg_telefono" maxlength="9"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaTelefono.errors">
+                    <ul><li>El Teléfono es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_cargo">Cargo</label>
+                  <select formControlName="validaCargo" [(ngModel)]="empleado.cargo!.idCargo" id="id_reg_cargo" name="cargo" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option *ngFor="let aux of cargos" value="{{aux.idCargo}}">{{aux.nombreCargo}}</option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaCargo.errors">
+                    <ul><li>El Cargo es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_rol">Rol</label>
+                  <select formControlName="validaRol" [(ngModel)]="empleado.rol!.idRol" id="id_reg_rol" name="rol" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option *ngFor="let aux of roles" value="{{aux.idRol}}">{{aux.nombreRol}}</option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaRol.errors">
+                    <ul><li>El Rol es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_fecha">Fecha Contrato</label>
+                  <input formControlName="validaFecha" type="date" [(ngModel)]="empleado.fechaContrato" class="form-control" name="fechaContrato" id="id_reg_fecha"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaFecha.errors">
+                    <ul>
+                      <li>La Fecha es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 4%">
+                <div class="col-lg-3"><label for="id_reg_sueldoEmpleado">Sueldo</label>
+                  <input formControlName="validaSueldo" type="number" [(ngModel)]="empleado.sueldoEmpleado" placeholder="Ingrese el sueldo" class="form-control" name="sueldoEmpleado" id="id_reg_sueldoEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraEmpleado.controls.validaSueldo.errors">
+                    <ul>
+                      <li>El Sueldo es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary btn-sm" style="width: 100px;">Limpiar</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Cerrar</button>
+              <div class="form-group text-center">
+                <div class="col-lg-12">
+                  <button (click)="registraEmpleado()" id="id_reg_registra" class="btn btn-success btn-sm "style="width: 100px;" [disabled]="submitted && formsRegistraEmpleado.invalid">Registrar</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="idModalActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 65%;">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Actualización de Empleados</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form class="content" [formGroup]="formsActualizaEmpleado">
+            <div class="submit-form">
+              <div  class="row">
+                <div class="col-lg-3"><label for="id_reg_dniEmpleado">DNI</label>
+                  <input formControlName="validaDni" type="text" [(ngModel)]="empleado.dniEmpleado" placeholder="Ingrese el DNI" class="form-control" name="dniEmpleado" id="id_act_dniEmpleado" maxlength="8"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaDni.errors">
+                    <ul>
+                      <li>El DNI es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_apeEmpleado">Apellidos</label>
+                  <input formControlName="validaApellido" type="text" [(ngModel)]="empleado.apeEmpleado" placeholder="Ingrese los Apellidos" class="form-control" name="apeEmpleado" id="id_act_apeEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaApellido.errors">
+                    <ul>
+                      <li>Los Apellidos son obligatorios</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_nomEmpleado">Nombres</label>
+                  <input formControlName="validaNombre" type="text" [(ngModel)]="empleado.nomEmpleado" placeholder="Ingrese los Nombres" class="form-control" name="nombreEmpleado" id="id_act_nomEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaNombre.errors">
+                    <ul>
+                      <li>Los Nombres son obligatorios</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_emailEmpleado">Correo Electrónico</label>
+                  <input formControlName="validaCorreo" type="email" [(ngModel)]="empleado.emailEmpleado" placeholder="Ingrese el Correo Electrónico" class="form-control" name="emailEmpleado" id="id_act_emailEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaCorreo.errors">
+                    <ul>
+                      <li>El Correo Electrónico es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 4%">
+                <div class="col-lg-3"><label for="id_reg_telefono">Teléfono</label>
+                  <input formControlName="validaTelefono" [(ngModel)]="empleado.telefono" type="tel" placeholder="Ingrese el número de Teléfono" class="form-control" name="telefono" id="id_act_telefono" maxlength="9"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaTelefono.errors">
+                    <ul><li>El Teléfono es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_cargo">Cargo</label>
+                  <select formControlName="validaCargo" [(ngModel)]="empleado.cargo!.idCargo" id="id_act_cargo" name="cargo" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option *ngFor="let aux of cargos" value="{{aux.idCargo}}">{{aux.nombreCargo}}</option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaCargo.errors">
+                    <ul><li>El Cargo es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_rol">Rol</label>
+                  <select formControlName="validaRol" [(ngModel)]="empleado.rol!.idRol" id="id_act_rol" name="rol" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option *ngFor="let aux of roles" value="{{aux.idRol}}">{{aux.nombreRol}}</option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaRol.errors">
+                    <ul><li>El Rol es obligatorio</li></ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_reg_fecha">Fecha Contrato</label>
+                  <input formControlName="validaFecha" type="date" [(ngModel)]="empleado.fechaContrato" class="form-control" name="fechaContrato" id="id_act_fecha"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaFecha.errors">
+                    <ul>
+                      <li>La Fecha es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 4%">
+                <div class="col-lg-3"><label for="id_reg_sueldoEmpleado">Sueldo</label>
+                  <input formControlName="validaSueldo" type="number" [(ngModel)]="empleado.sueldoEmpleado" class="form-control" name="sueldoEmpleado" id="id_act_sueldoEmpleado"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaSueldo.errors">
+                    <ul>
+                      <li>La Fecha es obligatorio</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3"><label for="id_act_estado">Estado</label>
+                  <select formControlName="validaEstado" id="id_act_estado" [(ngModel)]="empleado.estado"  name="estado" class="form-control">
+                    <option value="-1"> [Seleccione] </option>
+                    <option value="1"> Activo </option>
+                    <option value="0"> Inactivo </option>
+                  </select>
+                  <div class="invalid" *ngIf="submitted && formsActualizaEmpleado.controls.validaEstado.errors">
+                    <ul><li>El Estado es obligatorio</li></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary btn-sm" style="width: 100px;">Limpiar</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="btn_act_cerrar" style="width: 100px;">Cerrar</button>
+              <div class="form-group text-center">
+                <div class="col-lg-12">
+                  <button id="id_act_actualiza" (click)="actualizaEmpleado()" class="btn btn-success btn-sm "style="width: 100px;">Actualizar</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

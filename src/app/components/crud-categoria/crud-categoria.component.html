@@ -1,5 +1,5 @@
 
-<div class="container"><h5>Crud Cargo</h5>
+<div class="container"><h5>Crud Categoría</h5>
   <div class="col-md-23" style="margin-top:3%">
     <div class="row" style="height: 50px">
       <div class="col-md-2">
@@ -13,17 +13,16 @@
             <thead>
               <tr class="text-center">
                 <th class= "align-middle" style="width: 5%">#</th>
-                <th class= "align-middle" style="width: 30%">Nombre del Cargo</th>
+                <th class= "align-middle" style="width: 30%">Descripción</th>
                 <th class= "align-middle" style="width: 10%">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let x of cargos">
-                <td class= "text-center align-middle">{{ x.idCargo }}</td>
-                <td class= "align-middle">{{ x.nombreCargo }}</td>
+              <tr *ngFor="let x of categorias">
+                <td class= "text-center align-middle">{{ x.idCategoria }}</td>
+                <td class= "align-middle">{{ x.nomCategoria }}</td>
                 <td class= "text-center align-middle">
                   <button type="button" (click)="busca(x)" class="btn btn-success m-1" data-toggle="modal" data-target="#idModalActualizar">Editar</button>
-                  <button (click)="eliminaCargo(x)" type="button" class="btn btn-danger">Eliminar</button>
                 </td>
               </tr>
             </tbody>
@@ -35,18 +34,18 @@
   <div class="modal fade" id="idModalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width:40%;">
       <div class="modal-content">
-        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Registro de Cargos</h5>
+        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Registro de Categorías</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <form class="content" [formGroup]="formsRegistra">
+          <form class="content" [formGroup]="formsRegistraCategoria">
             <div class="submit-form">
               <div  class="row">
-                <div class="col-lg-6"><label for="id_reg_nombre">Nombre del Cargo</label>
-                  <input formControlName="validaNombre" type="text" [(ngModel)]="cargo.nombreCargo" placeholder="Ingrese nombre del cargo" class="form-control" name="nombre" id="id_reg_nombre"/>
-                  <div class="invalid" *ngIf="submitted && formsRegistra.controls.validaNombre.errors">
+                <div class="col-lg-6"><label for="id_reg_nomCategoria">Nombre de la Categoría</label>
+                  <input formControlName="validaNombre" type="text" [(ngModel)]="categoria.nomCategoria" placeholder="Ingrese la categoría" class="form-control" name="nomCategoria" id="id_reg_nomCategoria"/>
+                  <div class="invalid" *ngIf="submitted && formsRegistraCategoria.controls.validaNombre.errors">
                     <ul>
-                      <li>Los nombres es obligatorio</li>
+                      <li>La categoría es obligatorio</li>
                     </ul>
                   </div>
                 </div>
@@ -57,7 +56,7 @@
               <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Cerrar</button>
               <div class="form-group text-center">
                 <div class="col-lg-12">
-                  <button (click)="registraCargo()" id="id_reg_registra" class="btn btn-success btn-sm "style="width: 100px;" [disabled]="submitted && formsRegistra.invalid">Registrar</button>
+                  <button (click)="registraCategoria()" id="id_reg_registra" class="btn btn-success btn-sm "style="width: 100px;" [disabled]="submitted && formsRegistraCategoria.invalid">Registrar</button>
                 </div>
               </div>
             </div>
@@ -69,18 +68,18 @@
   <div class="modal fade" id="idModalActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width:40%;">
       <div class="modal-content">
-        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Actualización de Cargos</h5>
+        <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Actualizar Categorías</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <form class="content" [formGroup]="formsActualiza">
+          <form class="content" [formGroup]="formsActualizaCategoria">
             <div class="submit-form">
               <div  class="row">
-                <div class="col-lg-6"><label for="id_reg_nombre">Nombre del Cargo</label>
-                  <input formControlName="validaNombre" type="text" [(ngModel)]="cargo.nombreCargo" class="form-control" name="nombre" id="id_act_nombre"/>
-                  <div class="invalid" *ngIf="submitted && formsActualiza.controls.validaNombre.errors">
+                <div class="col-lg-6"><label for="id_reg_nomCategoria">Nombre de la Categoría</label>
+                  <input formControlName="validaNombre" type="text" [(ngModel)]="categoria.nomCategoria" class="form-control" name="nomCategoria" id="id_act_nomCategoria"/>
+                  <div class="invalid" *ngIf="submitted && formsActualizaCategoria.controls.validaNombre.errors">
                     <ul>
-                      <li>Los nombres es obligatorio</li>
+                      <li>La categoría es obligatorio</li>
                     </ul>
                   </div>
                 </div>
@@ -91,7 +90,7 @@
               <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="btn_act_cerrar" style="width: 100px;">Cerrar</button>
               <div class="form-group text-center">
                 <div class="col-lg-12">
-                  <button (click)="actualizaCargo()" id="id_act_actualiza" class="btn btn-success btn-sm "style="width: 100px;" >Actualizar</button>
+                  <button (click)="actualizaCategoria()" id="id_act_actualiza" class="btn btn-success btn-sm "style="width: 100px;" >Actualizar</button>
                 </div>
               </div>
             </div>

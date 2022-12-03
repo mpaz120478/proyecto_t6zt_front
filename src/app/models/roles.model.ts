@@ -1,4 +1,4 @@
 export class Roles {
-  IdRol?: number;
-  NombreRol?: string;
+  idRol?: number;
+  nombreRol?: string;
 }

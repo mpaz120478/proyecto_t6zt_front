@@ -12,36 +12,39 @@ import Swal from 'sweetalert2';
   templateUrl: './crud-empleado.component.html',
   styleUrls: ['./crud-empleado.component.css']
 })
+
 export class CrudEmpleadoComponent implements OnInit {
 
   empleados: Empleado [] = []
-  cargos: Cargo [] = []
-  roles: Roles [] = []
-  filtro: string =""
+  cargos: Cargo [] = [];
+  roles: Roles [] = [];
+  filtro: string ="";
 
   empleado: Empleado = {
-    IdEmpleado:0,
-    DniEmpleado:"",
-    ApeEmpleado:"",
-    NomEmpleado:"",
-    Telefono:"",
-    FechaContrato: new Date,
-    SueldoEmpleado:"",
-    Estado:1,
+    idEmpleado:0,
+    dniEmpleado:"",
+    apeEmpleado:"",
+    nomEmpleado:"",
+    emailEmpleado:"",
+    telefono:"",
+    fechaContrato: new Date(),
+    sueldoEmpleado:"",
+    estado:1,
     cargo: {
       idCargo:-1,
     },
     rol: {
-      IdRol:-1,
+      idRol:-1,
     }
   }
 
   submitted = false;
 
-  formsRegistra = new FormGroup({
+  formsRegistraEmpleado = new FormGroup({
     validaDni: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8}')]),
-    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
+    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaCorreo: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')]),
     validaTelefono: new FormControl('', [Validators.required,Validators.pattern('[0-9]{9}')]),
     validaFecha: new FormControl('',[Validators.required]),
     validaSueldo: new FormControl('', [Validators.required]),
@@ -49,10 +52,11 @@ export class CrudEmpleadoComponent implements OnInit {
     validaRol: new FormControl('', [Validators.min(1)]),
   });
 
-  formsActualiza = new FormGroup({
+  formsActualizaEmpleado = new FormGroup({
     validaDni: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8}')]),
-    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
-    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ]{3,50}')]),
+    validaApellido: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaNombre: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9 ]{3,30}')]),
+    validaCorreo: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')]),
     validaTelefono: new FormControl('', [Validators.required,Validators.pattern('[0-9]{9}')]),
     validaFecha: new FormControl('',[Validators.required]),
     validaSueldo: new FormControl('', [Validators.required]),
@@ -68,10 +72,13 @@ export class CrudEmpleadoComponent implements OnInit {
     this.utilService.listarRoles().subscribe(
       response =>this.roles = response
     );
+    this.utilService.listarEmpleados().subscribe(
+      response =>this.empleados = response
+    );
    }
 
    actualizaEstado(obj:Empleado){
-    obj.Estado = obj.Estado == 1? 0 : 1;
+    obj.estado = obj.estado == 1? 0 : 1;
     this.empleadoService.actualizarEmpleado(obj).subscribe();
   }
 
@@ -93,7 +100,7 @@ export class CrudEmpleadoComponent implements OnInit {
 
   registraEmpleado(){
     this.submitted = true;
-    if(this.formsRegistra.invalid){return;}
+    if(this.formsRegistraEmpleado.invalid){return;}
     this.submitted = false;
     this.empleadoService.registrarEmpleado(this.empleado).subscribe(
       x=>{
@@ -107,28 +114,29 @@ export class CrudEmpleadoComponent implements OnInit {
     this.cargos = [];
     this.roles = [];
     this.empleado = {
-      IdEmpleado:0,
-      DniEmpleado:"",
-      ApeEmpleado:"",
-      NomEmpleado:"",
-      Telefono:"",
-      FechaContrato: new Date,
-      SueldoEmpleado:"",
-      Estado:1,
+      idEmpleado:0,
+      dniEmpleado:"",
+      apeEmpleado:"",
+      nomEmpleado:"",
+      emailEmpleado:"",
+      telefono:"",
+      fechaContrato: new Date(),
+      sueldoEmpleado:"",
+      estado:1,
       cargo: {
         idCargo:-1,
       },
       rol: {
-      IdRol:-1,
+      idRol:-1,
       }
     }
   }
 
   actualizaEmpleado(){
     this.submitted = true;
-    if(this.formsRegistra.invalid){return;}
+    if(this.formsRegistraEmpleado.invalid){return;}
     this.submitted = false;
-    this.empleadoService.registrarEmpleado(this.empleado).subscribe(
+    this.empleadoService.actualizarEmpleado(this.empleado).subscribe(
       x=>{
         document.getElementById("btn_act_cerrar")?.click();
         Swal.fire('Mensaje', x.mensaje,'info');
@@ -140,19 +148,20 @@ export class CrudEmpleadoComponent implements OnInit {
     this.cargos = [];
     this.roles = [];
     this.empleado = {
-      IdEmpleado:0,
-      DniEmpleado:"",
-      ApeEmpleado:"",
-      NomEmpleado:"",
-      Telefono:"",
-      FechaContrato: new Date,
-      SueldoEmpleado:"",
-      Estado:1,
+      idEmpleado:0,
+      dniEmpleado:"",
+      apeEmpleado:"",
+      nomEmpleado:"",
+      emailEmpleado:"",
+      telefono:"",
+      fechaContrato: new Date(),
+      sueldoEmpleado:"",
+      estado:1,
       cargo: {
         idCargo:-1,
       },
       rol: {
-      IdRol:-1,
+      idRol:-1,
       }
     }
   }
@@ -168,7 +177,7 @@ export class CrudEmpleadoComponent implements OnInit {
       cancelButtonText: 'No, cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.empleadoService.eliminarEmpleado(obj.IdEmpleado || 0).subscribe(
+        this.empleadoService.eliminarEmpleado(obj.idEmpleado || 0).subscribe(
           x  =>  {
             Swal.fire('Mensaje',x.mensaje,'success');
             this.empleadoService.consultaPorApellidos(this.filtro==""?"todos":this.filtro).subscribe(

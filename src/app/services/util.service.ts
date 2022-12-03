@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppSettings } from '../app.settings';
 import { Cargo } from '../models/cargo.model';
+import { Categoria } from '../models/categoria.model';
 import { Cliente } from '../models/cliente.model';
 import { Departamento } from '../models/departamento.model';
 import { Empleado } from '../models/empleado.model';
@@ -41,6 +42,10 @@ export class UtilService {
 
   listarUsuarios():Observable<Usuario[]>{
     return this.http.get<Usuario[]>(baseUrlUtil+"/listarUsuarios");
+  }
+
+  listarCategorias():Observable<Categoria[]>{
+    return this.http.get<Categoria[]>(baseUrlUtil+"/listarCategorias");
   }
 
 }

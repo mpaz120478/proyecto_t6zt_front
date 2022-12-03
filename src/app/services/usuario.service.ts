@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AppSettings } from '../app.settings';
 import { Usuario } from '../models/usuario.model';
 
-const baseUrl = AppSettings.API_ENDPOINT+ '/roles'
+const baseUrl = AppSettings.API_ENDPOINT+ '/usuarios';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,10 @@ export class UsuarioService {
   }
 
   actualizarUsuario(obj:Usuario):Observable<any> {
-    return this.http.put(baseUrl + "/actualizaUsuario", obj)
+    return this.http.put(baseUrl + "/actualizaUsuario", obj);
   }
 
-  eliminarUsuario(IdUsuario:number):Observable<any> {
-    return this.http.delete(baseUrl + "/eliminaUsuario"+ IdUsuario);
+  eliminarUsuario(idUsuario:number):Observable<any> {
+    return this.http.delete(baseUrl + "/eliminaUsuario/"+ idUsuario);
   }
 }

@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { AppSettings } from '../app.settings';
 import { Empleado } from '../models/empleado.model';
 
-const baseUrl = AppSettings.API_ENDPOINT+ '/empleados'
+const baseUrl = AppSettings.API_ENDPOINT+ '/empleados';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class EmpleadoService {
 
   constructor(private http:HttpClient) { }
@@ -22,10 +23,10 @@ export class EmpleadoService {
   }
 
   actualizarEmpleado(obj:Empleado):Observable<any> {
-    return this.http.put(baseUrl + "/actualizaEmpleado", obj)
+    return this.http.put(baseUrl + "/actualizaEmpleado", obj);
   }
 
-  eliminarEmpleado(IdEmpleado:number):Observable<any> {
-    return this.http.delete(baseUrl + "/eliminaEmpleado"+ IdEmpleado);
+  eliminarEmpleado(idEmpleado:number):Observable<any> {
+    return this.http.delete(baseUrl + "/eliminaEmpleado/"+ idEmpleado);
   }
 }

@@ -25,7 +25,6 @@ export class CrudClienteComponent implements OnInit {
     fonoCliente:"",
     emailCliente:"",
     direcCliente:"",
-    fechaRegistro: new Date(),
     estado:1,
     departamento:{
       idDpto:-1,
@@ -35,18 +34,18 @@ export class CrudClienteComponent implements OnInit {
   submitted = false;
 
   formsRegistraCliente = new FormGroup({
-    validaDocumento: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8,11}')]),
-    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,50}')]),
-    validaDireccion: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,100}')]),
+    validaDocumento: new FormControl('', [Validators.required]),
+    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ ]{3,30}')]),
+    validaDireccion: new FormControl('',[Validators.required]),
     validaTelefono: new FormControl('', [Validators.required,Validators.pattern('[0-9]{9}')]),
     validaCorreo: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')]),
     validaDpto: new FormControl('', [Validators.min(1)]),
   });
 
   formsActualizaCliente = new FormGroup({
-    validaDocumento: new FormControl('', [Validators.required,Validators.pattern('[0-9]{8,11}')]),
-    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,50}')]),
-    validaDireccion: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ0-9]{3,100}')]),
+    validaDocumento: new FormControl('', [Validators.required]),
+    validaDatos: new FormControl('',[Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñ ]{3,30}')]),
+    validaDireccion: new FormControl('',[Validators.required]),
     validaTelefono: new FormControl('', [Validators.required,Validators.pattern('[0-9]{9}')]),
     validaCorreo: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')]),
     validaDpto: new FormControl('', [Validators.min(1)]),
@@ -57,6 +56,9 @@ export class CrudClienteComponent implements OnInit {
     this.utilService.listarDptos().subscribe(
       response => this.departamentos = response
     );
+    this.utilService.listarClientes().subscribe(
+      response => this.clientes = response
+    )
   }
 
   actualizaEstado(obj:Cliente){
@@ -98,7 +100,6 @@ export class CrudClienteComponent implements OnInit {
       fonoCliente:"",
       emailCliente:"",
       direcCliente:"",
-      fechaRegistro: new Date(),
       estado:1,
       departamento:{
         idDpto:-1,
@@ -127,7 +128,6 @@ export class CrudClienteComponent implements OnInit {
       fonoCliente:"",
       emailCliente:"",
       direcCliente:"",
-      fechaRegistro: new Date(),
       estado:1,
       departamento:{
         idDpto:-1,

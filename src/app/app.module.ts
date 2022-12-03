@@ -9,6 +9,8 @@ import { CrudCargoComponent } from './components/crud-cargo/crud-cargo.component
 import { CrudClienteComponent } from './components/crud-cliente/crud-cliente.component';
 import { CrudEmpleadoComponent } from './components/crud-empleado/crud-empleado.component';
 import { CrudUsuarioComponent } from './components/crud-usuario/crud-usuario.component';
+import { CrudCategoriaComponent } from './components/crud-categoria/crud-categoria.component';
+import { CrudProductoComponent } from './components/crud-producto/crud-producto.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { CrudUsuarioComponent } from './components/crud-usuario/crud-usuario.com
     CrudCargoComponent,
     CrudClienteComponent,
     CrudEmpleadoComponent,
-    CrudUsuarioComponent
+    CrudUsuarioComponent,
+    CrudCategoriaComponent,
+    CrudProductoComponent
   ],
   imports: [
     BrowserModule,

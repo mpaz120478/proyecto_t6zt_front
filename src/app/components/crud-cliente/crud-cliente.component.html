@@ -9,7 +9,7 @@
         <button type="button" (click)="consultarDatos()" class="btn btn-warning btn-sm" id="id_btn_filtrar" style="width: 150px">Filtrar</button>
       </div>
       <div class="col-md-2">
-        <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
+        <button type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-primary btn-sm' style="width: 150px">Registrar</button>
       </div>
     </div>
     <div class="row">
@@ -20,23 +20,22 @@
               <tr class="text-center">
                 <th class= "align-middle" style="width: 5%">#</th>
                 <th class= "align-middle" style="width: 10%">DNI - RUC</th>
-                <th class= "align-middle" style="width: 30%">Datos</th>
+                <th class= "align-middle" style="width: 20%">Datos</th>
                 <th class= "align-middle" style="width: 10%">Teléfono</th>
                 <th class= "align-middle" style="width: 10%">Departamento</th>
                 <th class= "align-middle" style="width: 10%">Estado</th>
                 <th class= "align-middle" style="width: 15%">Acciones</th>
-
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let x of clientes">
-                <td class= "align-middle">{{ x.idCliente }}</td>
-                <td class= "align-middle">{{ x.docCliente }}</td>
+                <td class= "text-center align-middle">{{ x.idCliente }}</td>
+                <td class= "text-center align-middle">{{ x.docCliente }}</td>
                 <td class= "align-middle">{{ x.datosCliente }}</td>
-                <td class= "align-middle">{{ x.fonoCliente }}</td>
+                <td class= "text-center align-middle">{{ x.fonoCliente }}</td>
                 <td class= "align-middle">{{ x.departamento!.nombreDpto}}</td>
-                <td class= "align-middle">{{ x.estado ==1 ?"Activo":"Inactivo" }}</td>
-                <td class= "align-middle">
+                <td class= "text-center align-middle">{{ x.estado ==1 ?"Activo":"Inactivo" }}</td>
+                <td class= "text-center align-middle">
                   <button type="button" (click)="busca(x)" class="btn btn-success m-1" data-toggle="modal" data-target="#idModalActualizar">Editar</button>
                   <button (click)="eliminaCliente(x)" type="button" class="btn btn-danger">Eliminar</button>
                 </td>
@@ -48,7 +47,7 @@
     </div>
   </div>
   <div class="modal fade" id="idModalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 70%;">
+    <div class="modal-dialog" style="max-width: 65%;">
       <div class="modal-content">
         <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Registro de Clientes</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -91,13 +90,13 @@
                 </div>
               </div>
               <div class="row" style="margin-top: 5%">
-                <div class="col-lg-3"><label for="id_reg_direc">Dirección</label>
+                <div class="col-lg-6"><label for="id_reg_direc">Dirección</label>
                   <input formControlName="validaDireccion" [(ngModel)]="cliente.direcCliente" type="text" placeholder="Ingrese dirección" class="form-control" name="direc" id="id_reg_direc"/>
                   <div class="invalid" *ngIf="submitted && formsRegistraCliente.controls.validaDireccion.errors">
                     <ul><li>La dirección es obligatoria</li></ul>
                   </div>
                 </div>
-                <div class="col-lg-4"><label for="id_reg_departamento">Departamento</label>
+                <div class="col-lg-3"><label for="id_reg_departamento">Departamento</label>
                   <select formControlName="validaDpto" [(ngModel)]="cliente.departamento!.idDpto" id="id_reg_departamento" name="departamento" class="form-control">
                     <option value="-1"> [Seleccione] </option>
                     <option *ngFor="let aux of departamentos" value="{{aux.idDpto}}">{{aux.nombreDpto}}</option>
@@ -123,7 +122,7 @@
     </div>
   </div>
   <div class="modal fade" id="idModalActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 80%;">
+    <div class="modal-dialog" style="max-width: 65%;">
       <div class="modal-content">
         <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Actualización de Clientes</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -166,13 +165,13 @@
                 </div>
               </div>
               <div class="row" style="margin-top: 5%">
-                <div class="col-lg-3"><label for="id_reg_direc">Dirección</label>
+                <div class="col-lg-6"><label for="id_reg_direc">Dirección</label>
                   <input formControlName="validaDireccion" [(ngModel)]="cliente.direcCliente" type="text" placeholder="Ingrese dirección" class="form-control" name="direc" id="id_act_direc"/>
                   <div class="invalid" *ngIf="submitted && formsActualizaCliente.controls.validaDireccion.errors">
                     <ul><li>La dirección es obligatoria</li></ul>
                   </div>
                 </div>
-                <div class="col-lg-4"><label for="id_reg_departamento">Departamento</label>
+                <div class="col-lg-3"><label for="id_reg_departamento">Departamento</label>
                   <select formControlName="validaDpto" [(ngModel)]="cliente.departamento!.idDpto" id="id_reg_departamento" name="departamento" class="form-control">
                     <option value="-1"> [Seleccione] </option>
                     <option *ngFor="let aux of departamentos" value="{{aux.idDpto}}">{{aux.nombreDpto}}</option>
